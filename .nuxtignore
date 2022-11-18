@@ -1,0 +1,2 @@
+pages/**/*.spec.ts
+**/*.spec.ts

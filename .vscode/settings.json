@@ -1,0 +1,24 @@
+{
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {
+    "*.ts": "$(capture).js, $(capture).*.ts, $(capture).*.tsx, $(capture).*.js, $(capture).*.jsx",
+    "*.js": "$(capture).js.map, $(capture).*.ts, $(capture).*.tsx, $(capture).*.js, $(capture).*.jsx",
+    "*.vue": "$(capture).js, , $(capture).*.ts, $(capture).*.tsx, $(capture).*.js, $(capture).*.jsx, $(capture).*.vue",
+    "tsconfig.json": "tsconfig.*.json",
+    "docker-compose.yml": "docker-compose.*.yml",
+    ".env": ".env.*",
+    "next.config.*": "next-env.d.ts",
+    "package.json": "package-lock.json, .npmrc, yarn.lock, .yarnrc, .eslintrc.json, .swcrc"
+  },
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "workbench.editor.tabSizing": "shrink",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll.prettier": true
+  },
+  "svelte.plugin.typescript.diagnostics.enable": false,
+  "eslint.validate": ["javascript", "typescript", "vue"]
+}
