@@ -57,6 +57,7 @@
     "vue-eslint-parser": "^9.1.0"
   },
   "dependencies": {
+    "@mdi/font": "^7.0.96",
     "@pinia/nuxt": "^0.4.2",
     "c8": "^7.12.0",
     "pinia": "^2.0.22",
