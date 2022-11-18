@@ -3,14 +3,11 @@ import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import { aliases, mdi } from 'vuetify/iconsets/mdi'
 
+import { colors } from '~/config'
+
 const defaultTheme: ThemeDefinition = {
   dark: true,
-  colors: {
-    background: '#202020',
-    'background-darker': '#1a1a1a',
-    primary: '#9400d5',
-    secondary: '#1e89ee',
-  },
+  colors,
 }
 
 export default defineNuxtPlugin(nuxtApp => {
