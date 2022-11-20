@@ -5,6 +5,10 @@ const route = useRoute()
 const authStore = useAuthStore()
 
 onMounted(() => {
+  authStore.connect()
+
+  if (authStore.isConnected) return navigateTo('/')
+
   const { accessToken, refreshToken } = route.query
 
   if (accessToken && refreshToken)

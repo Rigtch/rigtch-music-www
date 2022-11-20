@@ -1,7 +1,18 @@
 <script setup lang="ts">
+import { useAuthStore } from '~/stores'
+
+const authStore = useAuthStore()
+
 definePageMeta({
   middleware: 'auth',
 })
+
+watch(
+  () => authStore.isConnected,
+  isConnected => {
+    if (!isConnected) navigateTo('/about')
+  }
+)
 </script>
 
 <template>
