@@ -53,7 +53,7 @@ export const useAuthStore = defineStore('auth', {
 
       useGqlToken(accessToken, {
         config: {
-          type: 'bearer',
+          type: 'Bearer',
         },
       })
 
