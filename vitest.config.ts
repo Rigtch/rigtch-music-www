@@ -6,6 +6,7 @@ import { defineConfig } from 'vitest/config'
 import Vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
+  // @ts-expect-error - This should work
   plugins: [Vue()],
   resolve: {
     alias: {

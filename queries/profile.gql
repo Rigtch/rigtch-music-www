@@ -1,0 +1,9 @@
+query profile {
+  profile {
+    displayName
+    images {
+      url
+    }
+    href
+  }
+}
