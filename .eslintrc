@@ -84,6 +84,7 @@
     "README.md"
   ],
   "rules": {
+    "no-undef": "off",
     "eqeqeq": "error",
     "prettier/prettier": "warn",
     "prefer-const": "warn",
