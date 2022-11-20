@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { useDisplay } from 'vuetify'
+
+import { useAuthStore } from '~/stores'
+
+const authStore = useAuthStore()
 const { name } = useDisplay()
+
 const isDrawer = computed(() => {
   switch (name.value) {
     case 'xs':
@@ -47,8 +52,31 @@ const showDrawer = ref(false)
       <div v-if="!isDrawer" class="flex items-center">
         <v-spacer />
 
-        <div class="ml-4 flex">
-          <v-btn>Hello</v-btn>
+        <div
+          v-if="authStore.isConnected"
+          class="ml-4 p-2 flex items-center gap-2"
+        >
+          <nuxt-link
+            class="flex items-center gap-4"
+            :to="authStore.user?.href"
+            target="_blank"
+          >
+            <p class="text-h6">
+              {{ authStore.user?.displayName }}
+            </p>
+
+            <v-avatar :image="authStore.user?.image" />
+          </nuxt-link>
+
+          <v-tooltip text="Disconnect" location="bottom">
+            <template #activator="{ props }">
+              <v-btn
+                icon="mdi-logout-variant"
+                v-bind="props"
+                @click="authStore.disconnect"
+              />
+            </template>
+          </v-tooltip>
         </div>
       </div>
     </v-app-bar>
