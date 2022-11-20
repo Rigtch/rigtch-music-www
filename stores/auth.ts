@@ -51,7 +51,11 @@ export const useAuthStore = defineStore('auth', {
         refresh: { accessToken },
       } = await GqlRefresh()
 
-      useGqlToken(accessToken)
+      useGqlToken(accessToken, {
+        config: {
+          type: 'bearer',
+        },
+      })
 
       this.accessToken = accessToken
     },
