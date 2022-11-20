@@ -1,11 +1,6 @@
 import { defineStore } from 'pinia'
 
-export interface User {
-  id?: string
-  displayName: string
-  image: string
-  href: string
-}
+import { User } from '~/types'
 
 export interface AuthState {
   accessToken?: string

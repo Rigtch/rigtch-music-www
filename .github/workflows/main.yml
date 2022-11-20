@@ -74,6 +74,8 @@ jobs:
 
       - name: Install dependencies 👨🏻‍💻
         run: yarn
+        env:
+          NUXT_API_AUTH_URL: ${{ secrets.NUXT_API_AUTH_URL }}
 
       - name: Lint 🐱
         run: yarn lint
@@ -107,6 +109,8 @@ jobs:
 
       - name: Install dependencies 👨🏻‍💻
         run: yarn
+        env:
+          NUXT_API_AUTH_URL: ${{ secrets.NUXT_API_AUTH_URL }}
 
       - name: Run unit tests 🧪
         run: yarn test:coverage
