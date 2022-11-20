@@ -37,9 +37,13 @@ jobs:
 
       - name: Install dependencies 👨🏻‍💻
         run: yarn
+        env:
+          NUXT_API_AUTH_URL: ${{ secrets.NUXT_API_AUTH_URL }}
 
       - name: Build Application 🧱
         run: yarn build
+        env:
+          NUXT_API_AUTH_URL: ${{ secrets.NUXT_API_AUTH_URL }}
 
   lint:
     name: 'Lint 🐱'
