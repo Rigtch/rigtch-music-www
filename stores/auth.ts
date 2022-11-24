@@ -6,6 +6,7 @@ export interface AuthState {
   accessToken?: string
   refreshToken?: string
   isConnected: boolean
+  isLoading: boolean
   user?: User
 }
 
@@ -15,14 +16,19 @@ export const useAuthStore = defineStore('auth', {
     refreshToken: undefined,
     user: undefined,
     isConnected: false,
+    isLoading: false,
   }),
   actions: {
+    setIsLoading(isLoading: boolean) {
+      this.isLoading = isLoading
+    },
     login(accessToken: string, refreshToken: string) {
       useGqlToken(accessToken)
 
       this.accessToken = accessToken
       this.refreshToken = refreshToken
 
+      this.setIsLoading(false)
       this.connect()
     },
     disconnect() {

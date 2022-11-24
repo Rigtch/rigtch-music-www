@@ -1,3 +1,17 @@
+<script setup lang="ts">
+import { useAuthStore } from '~/stores'
+
+const authStore = useAuthStore()
+
+function onClick() {
+  authStore.setIsLoading(true)
+  navigateTo(`http://${window.location.host}/api/auth/spotify/login`, {
+    external: true,
+    replace: true,
+  })
+}
+</script>
+
 <template>
   <v-card>
     <div class="flex flex-col md:flex-row align-center p-4">
@@ -14,8 +28,9 @@
           variant="outlined"
           rounded="pill"
           color="green-darken-2"
-          href="/api/auth/spotify/login"
           append-icon="mdi-music-note-eighth"
+          :loading="authStore.isLoading"
+          @click="onClick"
         >
           Connect
         </v-btn>
