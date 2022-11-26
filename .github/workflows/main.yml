@@ -39,11 +39,13 @@ jobs:
         run: yarn
         env:
           NUXT_API_AUTH_URL: ${{ secrets.NUXT_API_AUTH_URL }}
+          NUXT_API_STATISTICS_URL: ${{ secrets.NUXT_API_STATISTICS_URL }}
 
       - name: Build Application 🧱
         run: yarn build
         env:
           NUXT_API_AUTH_URL: ${{ secrets.NUXT_API_AUTH_URL }}
+          NUXT_API_STATISTICS_URL: ${{ secrets.NUXT_API_STATISTICS_URL }}
 
   lint:
     name: 'Lint 🐱'
@@ -76,6 +78,7 @@ jobs:
         run: yarn
         env:
           NUXT_API_AUTH_URL: ${{ secrets.NUXT_API_AUTH_URL }}
+          NUXT_API_STATISTICS_URL: ${{ secrets.NUXT_API_STATISTICS_URL }}
 
       - name: Lint 🐱
         run: yarn lint
@@ -111,6 +114,7 @@ jobs:
         run: yarn
         env:
           NUXT_API_AUTH_URL: ${{ secrets.NUXT_API_AUTH_URL }}
+          NUXT_API_STATISTICS_URL: ${{ secrets.NUXT_API_STATISTICS_URL }}
 
       - name: Run unit tests 🧪
         run: yarn test:coverage
