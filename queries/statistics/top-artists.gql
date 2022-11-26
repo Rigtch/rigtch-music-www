@@ -1,0 +1,10 @@
+query topArtists($limit: Float) {
+  topArtists(limit: $limit) {
+    name
+    genres
+    href
+    images {
+      url
+    }
+  }
+}

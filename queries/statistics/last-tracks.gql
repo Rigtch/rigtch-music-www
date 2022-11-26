@@ -1,0 +1,13 @@
+query lastTracks($limit: Float) {
+  lastTracks(limit: $limit) {
+    name
+    href
+    artists
+    album {
+      images {
+        url
+      }
+    }
+    playedAt
+  }
+}
