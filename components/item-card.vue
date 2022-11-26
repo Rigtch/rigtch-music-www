@@ -1,35 +1,97 @@
 <script setup lang="ts">
-defineProps<{
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+
+const props = defineProps<{
+  position?: number
   name: string
   href?: string
-  artist?: string
+  artists?: string[]
   artistHref?: string
+  genres?: string[]
   image: string
   isWide?: boolean
+  isOutlined?: boolean
+  playedAt?: string
 }>()
+
+dayjs.extend(relativeTime)
+
+const playedAgo = dayjs(props.playedAt).fromNow()
 </script>
 
 <template>
-  <v-card :class="!isWide && '!w-50'">
-    <div :class="[isWide ? 'flex-row-reverse' : 'flex-row', 'flex']">
+  <v-card
+    :class="
+      isWide
+        ? '<md:w-[12.5rem] md:max-w-120 md:h-[200px]'
+        : 'w-[12.5rem] h-[200px]'
+    "
+    :variant="isOutlined ? 'outlined' : 'elevated'"
+  >
+    <div
+      :class="[isWide ? 'flex-col md:flex-row-reverse' : 'flex-row', 'flex']"
+    >
       <v-img
         :src="image"
-        :class="[isWide && 'm-2 rounded-[4px]', 'flex items-end']"
+        :class="isWide && 'm-2 rounded-[4px]'"
         :cover="!isWide"
-        :width="isWide ? '192' : '200'"
+        :width="isWide ? '184' : '200'"
+        :height="isWide ? '184' : '200'"
       >
-        <v-card-title v-if="!isWide">
-          <a :href="href" target="_blank">{{ name }}</a>
-        </v-card-title>
+        <div class="flex justify-end flex-col h-full">
+          <div class="backdrop-filter backdrop-brightness-60">
+            <h3 v-if="position && !isWide" class="text-h4 px-4">
+              #{{ position }}
+            </h3>
+
+            <v-card-title v-if="!isWide" :class="artists && '!py-0'">
+              <a :href="href" target="_blank" class="whitespace-normal">
+                {{ name }}
+              </a>
+            </v-card-title>
+
+            <v-card-items
+              v-if="!isWide"
+              class="px-2 bg-black flex justify-between"
+            >
+              <span v-if="artists">
+                <a
+                  v-for="artist in artists"
+                  :key="artist"
+                  class="cursor-pointer hover:text-white text-gray-300"
+                  :href="artistHref"
+                  target="_blank"
+                >
+                  {{ artist }}
+                </a>
+              </span>
+
+              <span v-if="playedAt" class="text-gray-400">
+                {{ playedAgo }}
+              </span>
+            </v-card-items>
+          </div>
+        </div>
       </v-img>
 
       <div>
         <v-card-title v-if="isWide" class="text-h5 cursor-pointer">
-          <a :href="href" target="_blank">{{ name }}</a>
+          <h3 v-if="position" class="text-h4">#{{ position }}</h3>
+
+          <a
+            :href="href"
+            target="_blank"
+            :class="[position && 'py-2', 'whitespace-normal']"
+          >
+            {{ name }}
+          </a>
         </v-card-title>
 
-        <v-card-subtitle v-if="artist" :class="!isWide && 'py-2'">
+        <v-card-subtitle v-if="artists && isWide">
           <a
+            v-for="artist in artists"
+            :key="artist"
             class="cursor-pointer hover:text-white"
             :href="artistHref"
             target="_blank"
@@ -37,6 +99,21 @@ defineProps<{
             {{ artist }}
           </a>
         </v-card-subtitle>
+
+        <v-card-items
+          v-if="isWide && genres && genres.length > 0"
+          class="px-4 pb-4 md:pb-0 flex gap-1 flex-wrap"
+        >
+          <v-chip
+            v-for="genre in genres"
+            :key="genre"
+            color="secondary"
+            size="x-small"
+            variant="outlined"
+          >
+            {{ genre }}
+          </v-chip>
+        </v-card-items>
       </div>
     </div>
   </v-card>
