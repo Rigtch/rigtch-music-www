@@ -61,6 +61,7 @@
     "@mdi/font": "^7.0.96",
     "@pinia/nuxt": "^0.4.2",
     "c8": "^7.12.0",
+    "dayjs": "^1.11.6",
     "nuxt-graphql-client": "^0.2.13",
     "nuxt-proxy": "^0.3.4",
     "pinia": "^2.0.22",
