@@ -1,0 +1,12 @@
+query topTracks($limit: Float) {
+  topTracks(limit: $limit) {
+    name
+    href
+    artists
+    album {
+      images {
+        url
+      }
+    }
+  }
+}
