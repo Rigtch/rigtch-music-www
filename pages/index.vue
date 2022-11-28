@@ -32,7 +32,10 @@ watch(
       </header>
 
       <main>
-        <div class="flex flex-col items-center md:flex-row gap-4 flex-wrap">
+        <div
+          v-if="statisticsStore.topArtists"
+          class="flex flex-col items-center md:flex-row gap-4 flex-wrap"
+        >
           <item-card
             v-for="(artist, index) in statisticsStore.topArtists"
             :key="artist.name"
@@ -45,6 +48,10 @@ watch(
             :is-outlined="index === 0"
           />
         </div>
+
+        <div v-else>
+          <v-progress-circular indeterminate color="secondary" />
+        </div>
       </main>
     </section>
 
@@ -56,7 +63,10 @@ watch(
       </header>
 
       <main>
-        <div class="flex flex-col items-center md:flex-row gap-4 flex-wrap">
+        <div
+          v-if="statisticsStore.topTracks"
+          class="flex flex-col items-center md:flex-row gap-4 flex-wrap"
+        >
           <item-card
             v-for="(track, index) in statisticsStore.topTracks"
             :key="track.name"
@@ -69,6 +79,10 @@ watch(
             :is-outlined="index === 0"
           />
         </div>
+
+        <div v-else>
+          <v-progress-circular indeterminate color="secondary" />
+        </div>
       </main>
     </section>
 
@@ -80,7 +94,10 @@ watch(
       </header>
 
       <main>
-        <div class="flex flex-col items-center md:flex-row gap-4 flex-wrap">
+        <div
+          v-if="statisticsStore.lastTracks"
+          class="flex flex-col items-center md:flex-row gap-4 flex-wrap"
+        >
           <item-card
             v-for="track in statisticsStore.lastTracks"
             :key="track.name"
@@ -90,6 +107,10 @@ watch(
             :artists="track.artists"
             :played-at="track.playedAt"
           />
+        </div>
+
+        <div v-else>
+          <v-progress-circular indeterminate color="secondary" />
         </div>
       </main>
     </section>
