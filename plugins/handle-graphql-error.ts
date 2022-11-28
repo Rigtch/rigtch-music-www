@@ -1,15 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useAuthStore } from '~/stores'
+import { GraphqlError } from '~/types'
 
 export default defineNuxtPlugin(() => {
-  useGqlError((error: any) => {
+  useGqlError((error: GraphqlError) => {
     const authStore = useAuthStore()
 
-    const tokenExpired = error.gqlErrors.some((graphqlError: any) =>
-      graphqlError.message.includes('id-token-expired')
-    )
+    const tokenExpired = error.statusCode === 401
 
     if (tokenExpired) authStore.refreshAccessToken()
   })
 })
-/* eslint-enable @typescript-eslint/no-explicit-any */
