@@ -16,28 +16,41 @@ export const useStatisticsStore = defineStore('statistics', {
   }),
   actions: {
     async fetchTopArtists() {
-      const { topArtists } = await GqlTopArtists()
+      try {
+        const { topArtists } = await GqlTopArtists()
 
-      this.topArtists = topArtists.map(({ images, ...rest }) => ({
-        ...rest,
-        image: images[0]?.url,
-      }))
+        this.topArtists = topArtists.map(({ images, ...rest }) => ({
+          ...rest,
+          image: images[0]?.url,
+        }))
+      } catch (error: any) {
+        if (error.statusCode === 503) this.fetchTopArtists()
+      }
     },
     async fetchTopTracks() {
-      const { topTracks } = await GqlTopTracks()
+      try {
+        const { topTracks } = await GqlTopTracks()
 
-      this.topTracks = topTracks.map(({ album, ...rest }) => ({
-        ...rest,
-        image: album.images[0]?.url,
-      }))
+        this.topTracks = topTracks.map(({ album, ...rest }) => ({
+          ...rest,
+          image: album.images[0]?.url,
+        }))
+      } catch (error: any) {
+        if (error.statusCode === 503) this.fetchTopTracks()
+      }
     },
     async fetchLastTracks() {
-      const { lastTracks } = await GqlLastTracks()
+      try {
+        const { lastTracks } = await GqlLastTracks()
 
-      this.lastTracks = lastTracks.map(({ album, ...rest }) => ({
-        ...rest,
-        image: album.images[0]?.url,
-      }))
+        this.lastTracks = lastTracks.map(({ album, playedAt, ...rest }) => ({
+          image: album.images[0]?.url,
+          ...(!playedAt && { playedAt: undefined }),
+          ...rest,
+        }))
+      } catch (error: any) {
+        if (error.statusCode === 503) this.fetchLastTracks()
+      }
     },
   },
 })
