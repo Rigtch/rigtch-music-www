@@ -45,7 +45,7 @@ export const useStatisticsStore = defineStore('statistics', {
 
         this.lastTracks = lastTracks.map(({ album, playedAt, ...rest }) => ({
           image: album.images[0]?.url,
-          ...(!playedAt && { playedAt: undefined }),
+          ...(!!playedAt && { playedAt: undefined }),
           ...rest,
         }))
       } catch (error: any) {
