@@ -101,14 +101,17 @@ const playedAgo = dayjs(props.playedAt).fromNow()
                 :key="artistName"
                 class="flex gap-2 flex-wrap"
               >
+                <span v-if="genres.length === 0">No genres found</span>
+
                 <v-chip
                   v-for="genre in genres"
+                  v-else
                   :key="genre"
                   color="secondary"
                   variant="outlined"
                 >
-                  {{ genre }}</v-chip
-                >
+                  {{ genre }}
+                </v-chip>
               </p>
             </div>
           </div>
