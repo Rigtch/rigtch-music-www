@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 
 import { Artist, Track } from '~/types'
+import { getArtists } from '~/utils'
 
 export interface StatisticsState {
   topArtists?: Artist[]
@@ -31,10 +32,23 @@ export const useStatisticsStore = defineStore('statistics', {
       try {
         const { topTracks } = await GqlTopTracks()
 
-        this.topTracks = topTracks.map(({ album, ...rest }) => ({
-          ...rest,
-          image: album.images[0]?.url,
-        }))
+        this.topTracks = await Promise.all(
+          await topTracks.map(
+            async ({
+              album,
+              artists,
+              album: {
+                images: [{ url: image }],
+              },
+              ...rest
+            }) => ({
+              image,
+              artists: await getArtists(artists),
+              albumName: album.name,
+              ...rest,
+            })
+          )
+        )
       } catch (error: any) {
         if (error.statusCode === 503) this.fetchTopTracks()
       }
@@ -43,11 +57,25 @@ export const useStatisticsStore = defineStore('statistics', {
       try {
         const { lastTracks } = await GqlLastTracks()
 
-        this.lastTracks = lastTracks.map(({ album, playedAt, ...rest }) => ({
-          image: album.images[0]?.url,
-          ...(!!playedAt && { playedAt: undefined }),
-          ...rest,
-        }))
+        this.lastTracks = await Promise.all(
+          lastTracks.map(
+            async ({
+              album,
+              artists,
+              playedAt,
+              album: {
+                images: [{ url: image }],
+              },
+              ...rest
+            }) => ({
+              image,
+              artists: await getArtists(artists),
+              albumName: album.name,
+              playedAt: playedAt ?? undefined,
+              ...rest,
+            })
+          )
+        )
       } catch (error: any) {
         if (error.statusCode === 503) this.fetchLastTracks()
       }
