@@ -24,14 +24,14 @@ const playedAgo = dayjs(props.playedAt).fromNow()
     <v-expansion-panel-title>
       <div class="flex w-full items-center justify-between">
         <div class="flex items-center gap-4">
-          <div v-if="position" class="text-h5 w-[50px] flex justify-center">
+          <div v-if="position" class="text-h5 md:w-[50px] flex justify-center">
             #{{ position }}
           </div>
 
-          <v-img :src="image" height="50" width="50" max-width="80" />
+          <v-img :src="image" height="50" width="50" max-width="80" cover />
 
           <div class="flex flex-col">
-            <p class="text-h6">{{ name }}</p>
+            <p class="text-lg md:text-xl">{{ name }}</p>
 
             <p class="text-neutral-500">
               {{ artists?.map(artist => artist.name).join(', ') }}
@@ -39,17 +39,21 @@ const playedAgo = dayjs(props.playedAt).fromNow()
           </div>
         </div>
 
-        <p v-if="playedAt" class="text-neutral-500 px-2">{{ playedAgo }}</p>
+        <p v-if="playedAt" class="text-neutral-500 px-2 hidden md:block">
+          {{ playedAgo }}
+        </p>
       </div>
     </v-expansion-panel-title>
 
     <v-expansion-panel-text>
       <v-row>
         <v-col class="flex gap-2 flex-col">
+          <p class="text-neutral-500 px-2 block md:hidden">{{ playedAgo }}</p>
+
           <p class="text-h5 !font-bold">From album:</p>
 
           <div class="flex gap-4">
-            <v-img :src="image" height="80" width="80" max-width="80" />
+            <v-img :src="image" height="80" width="80" max-width="80" cover />
 
             <div class="flex flex-col">
               <p class="text-h6">{{ albumName }}</p>
@@ -77,6 +81,7 @@ const playedAgo = dayjs(props.playedAt).fromNow()
                 height="80"
                 width="80"
                 max-width="80"
+                cover
               />
 
               <div>
