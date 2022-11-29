@@ -1,23 +1,13 @@
 <script setup lang="ts">
-import dayjs from 'dayjs'
-import relativeTime from 'dayjs/plugin/relativeTime'
-
-const props = defineProps<{
+defineProps<{
   position?: number
   name: string
   href?: string
-  artists?: string[]
-  artistHref?: string
   genres?: string[]
   image: string
   isWide?: boolean
   isOutlined?: boolean
-  playedAt?: string
 }>()
-
-dayjs.extend(relativeTime)
-
-const playedAgo = dayjs(props.playedAt).fromNow()
 </script>
 
 <template>
@@ -45,32 +35,11 @@ const playedAgo = dayjs(props.playedAt).fromNow()
               #{{ position }}
             </h3>
 
-            <v-card-title v-if="!isWide" :class="artists && '!py-0'">
+            <v-card-title v-if="!isWide" class="!py-0">
               <a :href="href" target="_blank" class="whitespace-normal">
                 {{ name }}
               </a>
             </v-card-title>
-
-            <v-card-items
-              v-if="!isWide"
-              class="px-2 bg-black flex justify-between"
-            >
-              <span v-if="artists">
-                <a
-                  v-for="artist in artists"
-                  :key="artist"
-                  class="cursor-pointer hover:text-white text-gray-300"
-                  :href="artistHref"
-                  target="_blank"
-                >
-                  {{ artist }}
-                </a>
-              </span>
-
-              <span v-if="playedAt" class="text-gray-400">
-                {{ playedAgo }}
-              </span>
-            </v-card-items>
           </div>
         </div>
       </v-img>
@@ -88,19 +57,7 @@ const playedAgo = dayjs(props.playedAt).fromNow()
           </a>
         </v-card-title>
 
-        <v-card-subtitle v-if="artists && isWide">
-          <a
-            v-for="artist in artists"
-            :key="artist"
-            class="cursor-pointer hover:text-white"
-            :href="artistHref"
-            target="_blank"
-          >
-            {{ artist }}
-          </a>
-        </v-card-subtitle>
-
-        <v-card-items
+        <v-card-text
           v-if="isWide && genres && genres.length > 0"
           class="px-4 pb-4 md:pb-0 flex gap-1 flex-wrap"
         >
@@ -113,7 +70,7 @@ const playedAgo = dayjs(props.playedAt).fromNow()
           >
             {{ genre }}
           </v-chip>
-        </v-card-items>
+        </v-card-text>
       </div>
     </div>
   </v-card>
