@@ -18,12 +18,13 @@ const showDrawer = ref(false)
 </script>
 
 <template>
-  <div>
+  <div class="fixed top-0 z-50 w-full">
     <v-app-bar
       color="background-darker"
       density="compact"
       elevation="24"
       height="81"
+      fixed
     >
       <template v-if="isDrawer" #prepend>
         <v-app-bar-nav-icon
