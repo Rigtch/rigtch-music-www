@@ -2,8 +2,11 @@ query topTracks($limit: Float) {
   topTracks(limit: $limit) {
     name
     href
-    artists
+    artists {
+      id
+    }
     album {
+      name
       images {
         url
       }
