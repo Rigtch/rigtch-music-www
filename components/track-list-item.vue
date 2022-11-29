@@ -39,7 +39,7 @@ const playedAgo = dayjs(props.playedAt).fromNow()
           </div>
         </div>
 
-        <p v-if="playedAt" class="text-neutral-500">{{ playedAgo }}</p>
+        <p v-if="playedAt" class="text-neutral-500 px-2">{{ playedAgo }}</p>
       </div>
     </v-expansion-panel-title>
 

@@ -67,17 +67,18 @@ watch(
           v-if="statisticsStore.topTracks"
           class="flex flex-col items-center md:flex-row gap-4 flex-wrap"
         >
-          <item-card
-            v-for="(track, index) in statisticsStore.topTracks"
-            :key="track.name"
-            :name="track.name"
-            :image="track.image"
-            :href="track.href"
-            :artists="track.artists"
-            :position="index + 1"
-            :is-wide="index === 0"
-            :is-outlined="index === 0"
-          />
+          <v-expansion-panels>
+            <track-list-item
+              v-for="(track, index) in statisticsStore.topTracks"
+              :key="track.name"
+              :name="track.name"
+              :image="track.image"
+              :href="track.href"
+              :artists="track.artists"
+              :album-name="track.albumName"
+              :position="index + 1"
+            />
+          </v-expansion-panels>
         </div>
 
         <div v-else>
@@ -98,15 +99,18 @@ watch(
           v-if="statisticsStore.lastTracks"
           class="flex flex-col items-center md:flex-row gap-4 flex-wrap"
         >
-          <item-card
-            v-for="track in statisticsStore.lastTracks"
-            :key="track.name"
-            :name="track.name"
-            :image="track.image"
-            :href="track.href"
-            :artists="track.artists"
-            :played-at="track.playedAt"
-          />
+          <v-expansion-panels>
+            <track-list-item
+              v-for="track in statisticsStore.lastTracks"
+              :key="track.name"
+              :name="track.name"
+              :image="track.image"
+              :href="track.href"
+              :artists="track.artists"
+              :album-name="track.albumName"
+              :played-at="track.playedAt"
+            />
+          </v-expansion-panels>
         </div>
 
         <div v-else>
