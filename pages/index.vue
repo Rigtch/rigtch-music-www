@@ -25,17 +25,16 @@ watch(
 </script>
 
 <template>
-  <div class="flex flex-col pt-8 md:pt-16 md:px-12 lg:px-24">
-    <section class="flex flex-col gap-8 w-full md:px-4 py-12">
+  <div class="flex flex-col items-center">
+    <section
+      class="flex flex-col gap-8 w-full md:py-12 max-w-[720px] lg:max-w-[1200px] items-center"
+    >
       <header>
         <h2 class="text-h4">Top Artists</h2>
       </header>
 
       <main class="flex justify-center">
-        <div
-          v-if="statisticsStore.topArtists"
-          class="inline-grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-items-center gap-4"
-        >
+        <!-- <div v-if="statisticsStore.topArtists">
           <item-card
             v-for="(artist, index) in statisticsStore.topArtists"
             :key="artist.name"
@@ -47,8 +46,13 @@ watch(
             :position="index + 1"
             :is-wide="index === 0"
             :is-outlined="index === 0"
-          />
-        </div>
+          /> -->
+        <!-- </div> -->
+
+        <top-artists
+          v-if="statisticsStore.topArtists"
+          :artists="statisticsStore.topArtists"
+        />
 
         <div v-else>
           <v-progress-circular indeterminate color="secondary" />
@@ -58,7 +62,9 @@ watch(
 
     <v-divider />
 
-    <section class="flex flex-col gap-8 w-full md:px-4 py-12">
+    <section
+      class="flex flex-col gap-8 w-full py-12 max-w-[720px] lg:max-w-[1200px] items-center"
+    >
       <header>
         <h2 class="text-h4">Top Tracks</h2>
       </header>
@@ -69,7 +75,7 @@ watch(
           class="flex flex-col items-center md:flex-row gap-4 flex-wrap"
         >
           <v-expansion-panels>
-            <track-list-item
+            <list-item
               v-for="(track, index) in statisticsStore.topTracks"
               :key="track.name"
               :name="track.name"
@@ -90,7 +96,9 @@ watch(
 
     <v-divider />
 
-    <section class="flex flex-col gap-8 w-full md:px-4 py-12">
+    <section
+      class="flex flex-col gap-8 w-full h-full py-12 max-w-[720px] lg:max-w-[1200px] items-center"
+    >
       <header>
         <h2 class="text-h4">Last Tracks</h2>
       </header>
@@ -101,7 +109,7 @@ watch(
           class="flex flex-col items-center md:flex-row gap-4 flex-wrap"
         >
           <v-expansion-panels>
-            <track-list-item
+            <list-item
               v-for="track in statisticsStore.lastTracks"
               :key="track.name"
               :name="track.name"
