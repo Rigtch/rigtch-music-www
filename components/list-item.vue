@@ -50,10 +50,6 @@ const playedAgo = dayjs(props.playedAt).fromNow()
     <v-expansion-panel-text>
       <v-row>
         <v-col v-if="albumName" class="flex gap-2 flex-col">
-          <p v-if="playedAt" class="text-neutral-500 px-2 block md:hidden">
-            {{ playedAgo }}
-          </p>
-
           <p class="text-h5 !font-bold">From album:</p>
 
           <div class="flex gap-4">
@@ -69,10 +65,7 @@ const playedAgo = dayjs(props.playedAt).fromNow()
           </div>
         </v-col>
 
-        <v-col
-          v-if="(artists && artists.length > 0)"
-          class="flex gap-2 flex-col"
-        >
+        <v-col v-if="artists && artists.length > 0" class="flex gap-2 flex-col">
           <p class="text-h5 !font-bold">
             From {{ artists && artists.length > 1 ? 'artists' : 'artist' }}
           </p>
@@ -99,24 +92,29 @@ const playedAgo = dayjs(props.playedAt).fromNow()
         </v-col>
 
         <v-col
-          v-if="(artists && artists?.map(({ genres }) => genres).length > 0 ) || (genres &&genres.length > 0)"
+          v-if="
+            (artists && artists?.map(({ genres }) => genres).length > 0) ||
+            (genres && genres.length > 0)
+          "
         >
           <div class="flex gap-2 flex-col">
             <p class="text-h5 !font-bold">Genres:</p>
 
-            <div v-if="artists && artists?.map(({ genres }) => genres).length > 0">
-              <!-- eslint-disable vue/no-unused-vars -->
-              <p
+            <div
+              v-if="artists && artists?.map(({ genres }) => genres).length > 0"
+            >
+              <div
                 v-for="{ genres: artistGenres, name: artistName } in artists"
                 :key="artistName"
                 class="flex gap-2 flex-wrap"
               >
-              <!-- eslint-enable vue/no-unused-vars -->
-                <div v-if="artistGenres.length === 0 || genres?.length === 0">No genres found</div>
+                <div v-if="artistGenres.length === 0 || genres?.length === 0">
+                  No genres found
+                </div>
 
                 <div v-else-if="artistGenres.length > 0">
                   <v-chip
-                    v-for="genre in artistGenres" 
+                    v-for="genre in artistGenres"
                     :key="genre"
                     color="secondary"
                     variant="outlined"
@@ -124,23 +122,30 @@ const playedAgo = dayjs(props.playedAt).fromNow()
                     {{ genre }}
                   </v-chip>
                 </div>
-                <!-- eslint-disable-next-line prettier/prettier -->
-              </p>
+              </div>
             </div>
 
             <div v-else-if="genres && genres.length > 0">
-                <p class="flex gap-2 flex-wrap">
-                  <v-chip
-                    v-for="genre in genres" 
-                    :key="genre"
-                    color="secondary"
-                    variant="outlined"
-                  >
-                    {{ genre }}
-                  </v-chip>
-                </p>
+              <p class="flex gap-2 flex-wrap">
+                <v-chip
+                  v-for="genre in genres"
+                  :key="genre"
+                  color="secondary"
+                  variant="outlined"
+                >
+                  {{ genre }}
+                </v-chip>
+              </p>
             </div>
           </div>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col class="flex justify-end">
+          <p v-if="playedAt" class="text-neutral-500 px-2 block md:hidden">
+            {{ playedAgo }}
+          </p>
         </v-col>
       </v-row>
     </v-expansion-panel-text>
