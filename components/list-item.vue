@@ -48,8 +48,8 @@ const playedAgo = dayjs(props.playedAt).fromNow()
     </v-expansion-panel-title>
 
     <v-expansion-panel-text>
-      <v-row>
-        <v-col v-if="albumName" class="flex gap-2 flex-col">
+      <v-row class="grid justify-around">
+        <div v-if="albumName" class="flex gap-2 flex-col p-4">
           <p class="text-h5 !font-bold">From album:</p>
 
           <div class="flex gap-4">
@@ -63,9 +63,12 @@ const playedAgo = dayjs(props.playedAt).fromNow()
               </p>
             </div>
           </div>
-        </v-col>
+        </div>
 
-        <v-col v-if="artists && artists.length > 0" class="flex gap-2 flex-col">
+        <div
+          v-if="artists && artists.length > 0"
+          class="flex gap-2 flex-col p-4"
+        >
           <p class="text-h5 !font-bold">
             From {{ artists && artists.length > 1 ? 'artists' : 'artist' }}
           </p>
@@ -89,56 +92,53 @@ const playedAgo = dayjs(props.playedAt).fromNow()
               </div>
             </div>
           </div>
-        </v-col>
+        </div>
 
-        <v-col
+        <div
           v-if="
             (artists && artists?.map(({ genres }) => genres).length > 0) ||
             (genres && genres.length > 0)
           "
+          class="flex gap-2 flex-col p-4"
         >
-          <div class="flex gap-2 flex-col">
-            <p class="text-h5 !font-bold">Genres:</p>
+          <p class="text-h5 !font-bold">Genres:</p>
 
+          <div
+            v-if="artists && artists?.map(({ genres }) => genres).length > 0"
+          >
             <div
-              v-if="artists && artists?.map(({ genres }) => genres).length > 0"
+              v-for="{ genres: artistGenres, name: artistName } in artists"
+              :key="artistName"
+              class="flex gap-2 flex-wrap"
             >
+              <div v-if="artistGenres.length === 0 || genres?.length === 0">
+                No genres found
+              </div>
+
               <div
-                v-for="{ genres: artistGenres, name: artistName } in artists"
-                :key="artistName"
+                v-else-if="artistGenres.length > 0"
                 class="flex gap-2 flex-wrap"
               >
-                <div v-if="artistGenres.length === 0 || genres?.length === 0">
-                  No genres found
-                </div>
-
-                <div v-else-if="artistGenres.length > 0">
-                  <v-chip
-                    v-for="genre in artistGenres"
-                    :key="genre"
-                    color="secondary"
-                    variant="outlined"
-                  >
+                <div v-for="genre in artistGenres" :key="genre">
+                  <v-chip color="secondary" variant="outlined">
                     {{ genre }}
                   </v-chip>
                 </div>
               </div>
             </div>
+          </div>
 
-            <div v-else-if="genres && genres.length > 0">
-              <p class="flex gap-2 flex-wrap">
-                <v-chip
-                  v-for="genre in genres"
-                  :key="genre"
-                  color="secondary"
-                  variant="outlined"
-                >
-                  {{ genre }}
-                </v-chip>
-              </p>
+          <div
+            v-else-if="genres && genres.length > 0"
+            class="flex gap-2 flex-wrap"
+          >
+            <div v-for="genre in genres" :key="genre">
+              <v-chip color="secondary" variant="outlined">
+                {{ genre }}
+              </v-chip>
             </div>
           </div>
-        </v-col>
+        </div>
       </v-row>
 
       <v-row>
