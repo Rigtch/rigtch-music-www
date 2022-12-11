@@ -14,7 +14,9 @@ const expandedCard = ref<number | undefined>(undefined)
 
 <template>
   <div class="w-full flex flex-col gap-8">
-    <div class="px-2 flex flex-col lg:grid lg:grid-cols-2 lg:gap-4">
+    <div
+      class="px-2 flex flex-col lg:grid lg:grid-cols-2 lg:gap-4 lg:items-start"
+    >
       <large-artist-card
         :image="firstArtist.image"
         :name="firstArtist.name"
