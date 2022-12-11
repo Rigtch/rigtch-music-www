@@ -25,19 +25,16 @@ defineProps<{
       <v-avatar :image="authStore.user?.image" />
     </nuxt-link>
 
-    <v-tooltip text="Disconnect" location="bottom">
+    <v-tooltip v-if="!isDrawer" text="Disconnect" location="bottom">
       <template #activator="{ props }">
         <v-btn
-          v-if="!isDrawer"
           icon="mdi-logout-variant"
           v-bind="props"
           @click="authStore.disconnect"
         />
-
-        <v-btn v-else v-bind="props" @click="authStore.disconnect">
-          disconnect
-        </v-btn>
       </template>
     </v-tooltip>
+
+    <v-btn v-else @click="authStore.disconnect">disconnect</v-btn>
   </div>
 </template>
