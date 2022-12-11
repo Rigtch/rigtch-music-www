@@ -14,36 +14,12 @@ const expandedCard = ref<number | undefined>(undefined)
 
 <template>
   <div class="w-full flex flex-col gap-8">
-    <div class="px-2 flex flex-col lg:grid grid-cols-2 lg:gap-4">
-      <v-card class="mb-[2rem] lg:mb-0 pb-2 min-h-full">
-        <div class="flex flex-col items-center gap-2 sm:gap-4">
-          <v-img :src="firstArtist.image" class="w-[360px] h-[360px]" />
-
-          <v-card-text class="!py-0 px-2 flex flex-col gap-4">
-            <div class="flex flex-wrap items-center gap-2 justify-center">
-              <h3 class="font-bold text-h3">#1</h3>
-              <h4 class="text-h3">{{ firstArtist.name }}</h4>
-            </div>
-
-            <div>
-              <div v-if="firstArtist.genres?.length === 0">No genres found</div>
-
-              <div v-else>
-                <p class="flex gap-2 flex-wrap">
-                  <v-chip
-                    v-for="genre in firstArtist.genres"
-                    :key="genre"
-                    color="secondary"
-                    variant="outlined"
-                  >
-                    {{ genre }}
-                  </v-chip>
-                </p>
-              </div>
-            </div>
-          </v-card-text>
-        </div>
-      </v-card>
+    <div class="px-2 flex flex-col lg:grid lg:grid-cols-2 lg:gap-4">
+      <large-artist-card
+        :image="firstArtist.image"
+        :name="firstArtist.name"
+        :genres="firstArtist.genres"
+      />
 
       <div class="flex flex-col gap-2">
         <artist-card
