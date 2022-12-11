@@ -55,9 +55,8 @@ const showDrawer = ref(false)
     <v-navigation-drawer
       v-if="isDrawer"
       v-model="showDrawer"
-      absolute
       temporary
-      class="p-2"
+      class="p-2 min-h-screen"
     >
       <user-info is-drawer />
     </v-navigation-drawer>
