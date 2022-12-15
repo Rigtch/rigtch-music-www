@@ -76,6 +76,7 @@ describe('Store - Auth', () => {
   })
 
   test('should disconnect', () => {
+    vi.stubGlobal('navigateTo', vi.fn())
     vi.stubGlobal('useGqlToken', vi.fn())
 
     authStore.accessToken = accessToken
