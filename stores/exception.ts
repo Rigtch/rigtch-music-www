@@ -20,10 +20,10 @@ export const useExceptionStore = defineStore('exception', {
     exceptions: [],
   }),
   actions: {
-    addError(message: string, type: ExceptionType = ExceptionType.Error) {
+    addException(message: string, type: ExceptionType = ExceptionType.Error) {
       this.exceptions.push({ message, type })
     },
-    removeError(message: string) {
+    removeException(message: string) {
       this.exceptions = this.exceptions.filter(
         error => error.message !== message
       )

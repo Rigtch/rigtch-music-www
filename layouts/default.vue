@@ -2,6 +2,8 @@
   <div>
     <v-app class="bg-background !min-h-screen">
       <v-layout class="flex flex-col min-h-screen">
+        <exceptions-view />
+
         <navigation-bar />
 
         <v-main>
