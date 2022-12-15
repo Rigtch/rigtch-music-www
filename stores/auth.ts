@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia'
 
+import { useExceptionStore } from '.'
+
 import { User } from '~/types'
 
 export interface AuthState {
@@ -32,6 +34,8 @@ export const useAuthStore = defineStore('auth', {
       this.refreshToken = undefined
       this.user = undefined
       this.isConnected = false
+
+      navigateTo('/about')
     },
     async refreshAccessToken() {
       if (!this.refreshToken) return
@@ -59,20 +63,31 @@ export const useAuthStore = defineStore('auth', {
 
       await this.refreshAccessToken()
 
-      const {
-        profile: {
+      try {
+        const {
+          profile: {
+            displayName,
+            href,
+            images: [{ url: image }],
+          },
+        } = await GqlProfile()
+
+        if (displayName) this.isConnected = true
+
+        this.user = {
           displayName,
           href,
-          images: [{ url: image }],
-        },
-      } = await GqlProfile()
+          image,
+        }
+      } catch ({ gqlErrors: [{ message }] }) {
+        if (message === 'User not registered in the Developer Dashboard') {
+          console.log('e')
+          const exceptionStore = useExceptionStore()
 
-      if (displayName) this.isConnected = true
+          exceptionStore.addError('User is not registered in private beta')
 
-      this.user = {
-        displayName,
-        href,
-        image,
+          this.disconnect()
+        }
       }
     },
   },
