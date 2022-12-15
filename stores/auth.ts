@@ -68,7 +68,7 @@ export const useAuthStore = defineStore('auth', {
           profile: {
             displayName,
             href,
-            images: [{ url: image }],
+            images: [image],
           },
         } = await GqlProfile()
 
@@ -77,7 +77,9 @@ export const useAuthStore = defineStore('auth', {
         this.user = {
           displayName,
           href,
-          image,
+          ...(image && {
+            image: image.url,
+          }),
         }
       } catch ({ gqlErrors: [{ message }] }) {
         if (message === 'User not registered in the Developer Dashboard') {
