@@ -81,10 +81,9 @@ export const useAuthStore = defineStore('auth', {
         }
       } catch ({ gqlErrors: [{ message }] }) {
         if (message === 'User not registered in the Developer Dashboard') {
-          console.log('e')
           const exceptionStore = useExceptionStore()
 
-          exceptionStore.addError('User is not registered in private beta')
+          exceptionStore.addException('User is not registered in private beta')
 
           this.disconnect()
         }
