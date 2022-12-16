@@ -1,5 +1,3 @@
 query refresh {
-  refresh {
-    accessToken
-  }
+  refresh
 }

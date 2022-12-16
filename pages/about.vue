@@ -1,18 +1,12 @@
 <script setup lang="ts">
 import { useAuthStore } from '~/stores'
 
-const route = useRoute()
 const authStore = useAuthStore()
 
 onMounted(() => {
   authStore.connect()
 
   if (authStore.isConnected) return navigateTo('/')
-
-  const { accessToken, refreshToken } = route.query
-
-  if (accessToken && refreshToken)
-    authStore.login(accessToken as string, refreshToken as string)
 })
 
 watch(
