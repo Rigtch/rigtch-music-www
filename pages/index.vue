@@ -9,11 +9,9 @@ definePageMeta({
 })
 
 onMounted(async () => {
-  await authStore.refreshAccessToken()
-
-  if (!statisticsStore.topArtists) statisticsStore.fetchTopArtists()
-  if (!statisticsStore.topTracks) statisticsStore.fetchTopTracks()
-  if (!statisticsStore.lastTracks) statisticsStore.fetchLastTracks()
+  if (!statisticsStore.topArtists) await statisticsStore.fetchTopArtists()
+  if (!statisticsStore.topTracks) await statisticsStore.fetchTopTracks()
+  if (!statisticsStore.lastTracks) await statisticsStore.fetchLastTracks()
 })
 
 watch(
