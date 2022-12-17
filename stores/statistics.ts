@@ -1,7 +1,9 @@
 import { defineStore } from 'pinia'
 
+import { ExceptionCollection, ExceptionType, useExceptionStore } from '.'
+
 import { Artist, Track } from '~/types'
-import { getArtists } from '~/utils'
+import { fetchLastTracks, fetchTopArtists, fetchTopTracks } from '~/api'
 
 export interface StatisticsState {
   topArtists?: Artist[]
@@ -18,66 +20,52 @@ export const useStatisticsStore = defineStore('statistics', {
   actions: {
     async fetchTopArtists() {
       try {
-        const { topArtists } = await GqlTopArtists()
+        this.topArtists = await fetchTopArtists()
+      } catch ({ statusCode, message }) {
+        if (message === 'no items') {
+          const exceptionsStore = useExceptionStore()
 
-        this.topArtists = topArtists.map(({ images, ...rest }) => ({
-          ...rest,
-          image: images[0]?.url,
-        }))
-      } catch (error: any) {
-        if (error.statusCode === 503) this.fetchTopArtists()
+          exceptionsStore.addException(
+            'You have no top artists',
+            ExceptionType.Info,
+            ExceptionCollection.TopArtists
+          )
+        }
+        if (statusCode === 503) this.fetchTopArtists()
       }
     },
     async fetchTopTracks() {
       try {
-        const { topTracks } = await GqlTopTracks()
+        this.topTracks = await fetchTopTracks()
+      } catch ({ statusCode, message }) {
+        if (message === 'no items') {
+          const exceptionsStore = useExceptionStore()
 
-        this.topTracks = await Promise.all(
-          await topTracks.map(
-            async ({
-              album,
-              artists,
-              album: {
-                images: [{ url: image }],
-              },
-              ...rest
-            }) => ({
-              image,
-              artists: await getArtists(artists),
-              albumName: album.name,
-              ...rest,
-            })
+          exceptionsStore.addException(
+            'You have no top tracks',
+            ExceptionType.Info,
+            ExceptionCollection.TopTracks
           )
-        )
-      } catch (error: any) {
-        if (error.statusCode === 503) this.fetchTopTracks()
+        }
+
+        if (statusCode === 503) this.fetchTopTracks()
       }
     },
     async fetchLastTracks() {
       try {
-        const { lastTracks } = await GqlLastTracks()
+        this.lastTracks = await fetchLastTracks()
+      } catch ({ statusCode, message }) {
+        if (message === 'no items') {
+          const exceptionsStore = useExceptionStore()
 
-        this.lastTracks = await Promise.all(
-          lastTracks.map(
-            async ({
-              album,
-              artists,
-              playedAt,
-              album: {
-                images: [{ url: image }],
-              },
-              ...rest
-            }) => ({
-              image,
-              artists: await getArtists(artists),
-              albumName: album.name,
-              playedAt: playedAt ?? undefined,
-              ...rest,
-            })
+          exceptionsStore.addException(
+            'You have no last tracks',
+            ExceptionType.Info,
+            ExceptionCollection.LastTracks
           )
-        )
-      } catch (error: any) {
-        if (error.statusCode === 503) this.fetchLastTracks()
+        }
+
+        if (statusCode === 503) this.fetchTopTracks()
       }
     },
   },
