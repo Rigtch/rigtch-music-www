@@ -1,8 +1,31 @@
 <script setup lang="ts">
-import { useAuthStore, useStatisticsStore } from '~/stores'
+import {
+  ExceptionCollection,
+  useAuthStore,
+  useExceptionStore,
+  useStatisticsStore,
+} from '~/stores'
 
 const authStore = useAuthStore()
 const statisticsStore = useStatisticsStore()
+const exceptionStore = useExceptionStore()
+
+const hasTopArtistsExceptions = computed(() =>
+  exceptionStore.exceptions.some(
+    exception => exception.collection === ExceptionCollection.TopArtists
+  )
+)
+const hasTopTracksExceptions = computed(() =>
+  exceptionStore.exceptions.some(
+    exception => exception.collection === ExceptionCollection.TopTracks
+  )
+)
+
+const hasLastTracksExceptions = computed(() =>
+  exceptionStore.exceptions.some(
+    exception => exception.collection === ExceptionCollection.LastTracks
+  )
+)
 
 definePageMeta({
   middleware: 'auth',
@@ -31,12 +54,15 @@ watch(
         <h2 class="text-h4">Top Artists</h2>
       </header>
 
-      <main class="flex justify-center">
+      <main class="flex justify-center w-full">
+        <exceptions-list
+          v-if="hasTopArtistsExceptions"
+          :collection="ExceptionCollection.TopArtists"
+        />
+
         <top-artists
-          v-if="
-            statisticsStore.topArtists &&
-            statisticsStore.topArtists?.length > 0 &&
-            statisticsStore.topArtists
+          v-else-if="
+            statisticsStore.topArtists && statisticsStore.topArtists?.length > 0
           "
           :artists="statisticsStore.topArtists"
         />
@@ -57,8 +83,15 @@ watch(
       </header>
 
       <main>
+        <exceptions-list
+          v-if="hasTopTracksExceptions"
+          :collection="ExceptionCollection.TopTracks"
+        />
+
         <div
-          v-if="statisticsStore.topTracks"
+          v-else-if="
+            statisticsStore.topTracks && statisticsStore.topTracks?.length > 0
+          "
           class="flex flex-col items-center md:flex-row gap-4 flex-wrap"
         >
           <v-expansion-panels>
@@ -91,8 +124,13 @@ watch(
       </header>
 
       <main>
+        <exceptions-list
+          v-if="hasLastTracksExceptions"
+          :collection="ExceptionCollection.LastTracks"
+        />
+
         <div
-          v-if="statisticsStore.lastTracks"
+          v-else-if="statisticsStore.lastTracks"
           class="flex flex-col items-center md:flex-row gap-4 flex-wrap"
         >
           <v-expansion-panels>
