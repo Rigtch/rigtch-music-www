@@ -32,23 +32,12 @@ watch(
       </header>
 
       <main class="flex justify-center">
-        <!-- <div v-if="statisticsStore.topArtists">
-          <item-card
-            v-for="(artist, index) in statisticsStore.topArtists"
-            :key="artist.name"
-            :class="index === 0 && 'sm:row-span-2 md:row-auto md:col-span-2'"
-            :name="artist.name"
-            :image="artist.image"
-            :href="artist.href"
-            :genres="artist.genres"
-            :position="index + 1"
-            :is-wide="index === 0"
-            :is-outlined="index === 0"
-          /> -->
-        <!-- </div> -->
-
         <top-artists
-          v-if="statisticsStore.topArtists"
+          v-if="
+            statisticsStore.topArtists &&
+            statisticsStore.topArtists?.length > 0 &&
+            statisticsStore.topArtists
+          "
           :artists="statisticsStore.topArtists"
         />
 

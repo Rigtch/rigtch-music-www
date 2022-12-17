@@ -3,7 +3,7 @@ import { useAuthStore } from '~/stores'
 
 const authStore = useAuthStore()
 
-onMounted(() => {
+onBeforeMount(() => {
   authStore.connect()
 
   if (authStore.isConnected) return navigateTo('/')
