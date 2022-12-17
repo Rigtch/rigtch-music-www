@@ -1,4 +1,4 @@
-export async function getArtists(artists: { id: string }[]) {
+export async function fetchArtists(artists: { id: string }[]) {
   return await Promise.all(
     artists.map(async ({ id }) => {
       const {
