@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { ExceptionCollection, useExceptionStore } from '~/stores'
 
-export interface ExceptionViewProperties {
+export interface ExceptionListProperties {
   collection?: ExceptionCollection
 }
 
 const exceptionStore = useExceptionStore()
 
-const properties = withDefaults(defineProps<ExceptionViewProperties>(), {
+const properties = withDefaults(defineProps<ExceptionListProperties>(), {
   collection: ExceptionCollection.Global,
 })
 
