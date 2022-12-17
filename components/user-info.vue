@@ -22,7 +22,9 @@ defineProps<{
         {{ authStore.user?.displayName }}
       </p>
 
-      <v-avatar :image="authStore.user?.image" />
+      <v-avatar :image="authStore.user?.image" color="secondary">
+        {{ authStore.user?.displayName.slice(0, 1).toUpperCase() }}
+      </v-avatar>
     </nuxt-link>
 
     <v-tooltip v-if="!isDrawer" text="Disconnect" location="bottom">
