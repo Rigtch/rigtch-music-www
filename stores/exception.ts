@@ -6,9 +6,17 @@ export enum ExceptionType {
   Info = 'info',
 }
 
+export enum ExceptionCollection {
+  Global = 'global',
+  TopArtists = 'topArtists',
+  TopTracks = 'topTracks',
+  LastTracks = 'lastTracks',
+}
+
 export interface Exception {
   type: ExceptionType
   message: string
+  collection: ExceptionCollection
 }
 
 export interface ExceptionState {
@@ -20,8 +28,14 @@ export const useExceptionStore = defineStore('exception', {
     exceptions: [],
   }),
   actions: {
-    addException(message: string, type: ExceptionType = ExceptionType.Error) {
-      this.exceptions.push({ message, type })
+    addException(
+      message: string,
+      type: ExceptionType = ExceptionType.Error,
+      collection: ExceptionCollection = ExceptionCollection.Global
+    ) {
+      if (this.exceptions.some(error => error.message === message)) return
+
+      this.exceptions.push({ message, type, collection })
     },
     removeException(message: string) {
       this.exceptions = this.exceptions.filter(
