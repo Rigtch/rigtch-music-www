@@ -3,8 +3,9 @@ import { useAuthStore } from '~/stores'
 
 const authStore = useAuthStore()
 
-onBeforeMount(() => {
-  authStore.connect()
+onBeforeMount(async () => {
+  await authStore.refresh()
+  await authStore.connect()
 
   if (authStore.isConnected) return navigateTo('/')
 })

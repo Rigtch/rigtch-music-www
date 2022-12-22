@@ -23,6 +23,9 @@ export const useAuthStore = defineStore('auth', {
 
       navigateTo('/about')
     },
+    async refresh() {
+      return await GqlRefresh()
+    },
     async connect() {
       try {
         const {
