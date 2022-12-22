@@ -24,7 +24,12 @@ export const useAuthStore = defineStore('auth', {
       navigateTo('/about')
     },
     async refresh() {
-      return await GqlRefresh()
+      try {
+        return await GqlRefresh()
+      } catch ({ gqlErrors: [{ message }] }) {
+        if (message === 'No value was provided for Authentication')
+          await this.disconnect()
+      }
     },
     async connect() {
       try {
