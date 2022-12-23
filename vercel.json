@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path(.*)",
-      "destination": "$NUXT_API_AUTH_URL/:path"
+      "destination": "https://rigtch-music-auth.onrender.com/:path"
     }
   ]
 }
