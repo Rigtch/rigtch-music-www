@@ -16,7 +16,7 @@
       ]
     }
   ],
-  "rewrites": [
+  "redirects": [
     {
       "source": "/api/:path(.*)",
       "destination": "https://rigtch-music-auth.onrender.com/:path"
